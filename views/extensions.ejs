@@ -1,0 +1,75 @@
+<div class="max-w-6xl mx-auto">
+    <header class="mb-8 flex justify-between items-center">
+        <div>
+            <h2 class="text-3xl font-bold">Extensions</h2>
+            <p class="text-slate-400">Manage your Chrome extensions and their pricing.</p>
+        </div>
+        <button onclick="document.getElementById('add-modal').classList.remove('hidden')" 
+            class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-semibold transition-all">
+            + Add Extension
+        </button>
+    </header>
+
+    <!-- Extensions Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% extensions.forEach(ext => { %>
+            <div class="glass p-6 rounded-2xl hover:border-blue-500/50 transition-all group">
+                <div class="flex items-center mb-4">
+                    <div class="w-12 h-12 bg-slate-800 rounded-xl flex items-center justify-center text-2xl mr-4 overflow-hidden">
+                        <% if (ext.icon_url) { %>
+                            <img src="<%= ext.icon_url %>" alt="<%= ext.name %>" class="w-full h-full object-cover">
+                        <% } else { %>
+                            🧩
+                        <% } %>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg"><%= ext.name %></h3>
+                        <p class="text-slate-500 text-xs font-mono"><%= ext.slug %></p>
+                    </div>
+                </div>
+                <p class="text-slate-400 text-sm mb-6 line-clamp-2">
+                    <%= ext.description || 'No description provided.' %>
+                </p>
+                <div class="flex space-x-3">
+                    <a href="/extensions/<%= ext.id %>" class="flex-1 bg-slate-800 hover:bg-slate-700 text-center py-2 rounded-lg text-sm font-medium transition-colors">
+                        Manage
+                    </a>
+                    <form action="/api/extensions/<%= ext.id %>/delete" method="POST" onsubmit="return confirm('Are you sure?')">
+                        <button type="submit" class="p-2 text-red-400 hover:bg-red-500/10 rounded-lg transition-colors">
+                            🗑️
+                        </button>
+                    </form>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+
+    <!-- Add Modal -->
+    <div id="add-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-lg rounded-2xl p-8 shadow-2xl">
+            <h3 class="text-2xl font-bold mb-6">Add New Extension</h3>
+            <form action="/api/extensions" method="POST" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-400 mb-1">Extension Name</label>
+                    <input type="text" name="name" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-400 mb-1">Slug (unique identifier)</label>
+                    <input type="text" name="slug" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="my-extension-slug">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-400 mb-1">Description</label>
+                    <textarea name="description" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" rows="3"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-400 mb-1">Icon URL (optional)</label>
+                    <input type="url" name="icon_url" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div class="flex space-x-4 mt-8">
+                    <button type="button" onclick="document.getElementById('add-modal').classList.add('hidden')" class="flex-1 bg-slate-800 hover:bg-slate-700 py-2 rounded-lg font-medium">Cancel</button>
+                    <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-700 py-2 rounded-lg font-bold">Create Extension</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

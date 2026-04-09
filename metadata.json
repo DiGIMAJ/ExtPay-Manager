@@ -1,0 +1,5 @@
+{
+  "name": "Chrome Extension Payment Manager",
+  "description": "A self-hosted web app to manage payments for Chrome extensions using Flutterwave. Add extensions, set pricing plans, generate checkout snippets, and verify licenses.",
+  "requestFramePermissions": []
+}

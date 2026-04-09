@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed - ExtPay Manager</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1" crossorigin="anonymous"></script>
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl text-center">
+        <div class="w-20 h-20 bg-red-500/20 text-red-500 rounded-full flex items-center justify-center text-4xl mx-auto mb-6">
+            ✕
+        </div>
+        <h1 class="text-3xl font-bold mb-2">Payment Failed</h1>
+        <p class="text-slate-400 mb-8">Something went wrong with your transaction. No charges were made.</p>
+
+        <button onclick="window.close()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-all">
+            Try Again
+        </button>
+    </div>
+</body>
+</html>

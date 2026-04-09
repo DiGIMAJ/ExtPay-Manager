@@ -1,0 +1,84 @@
+<div class="max-w-6xl mx-auto">
+    <header class="mb-12">
+        <h2 class="text-3xl font-bold">Integration Snippets</h2>
+        <p class="text-slate-400">Copy these code blocks to integrate payments and license checks.</p>
+    </header>
+
+    <div class="space-y-12">
+        <% extensions.forEach(ext => { %>
+            <section class="glass p-8 rounded-2xl">
+                <div class="flex items-center mb-8">
+                    <div class="w-10 h-10 bg-slate-800 rounded-lg flex items-center justify-center mr-4">🧩</div>
+                    <h3 class="text-2xl font-bold"><%= ext.name %></h3>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Website Checkout -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4 flex items-center">
+                            <span class="mr-2">🌐</span> Website Checkout
+                        </h4>
+                        <p class="text-slate-400 text-sm mb-4">Add these buttons to your landing page to allow users to purchase licenses.</p>
+                        
+                        <% if (ext.plans.length === 0) { %>
+                            <p class="text-yellow-500 text-sm italic">Create a plan first to see snippets.</p>
+                        <% } %>
+
+                        <% ext.plans.forEach(plan => { %>
+                            <div class="mb-6">
+                                <label class="block text-xs font-mono text-slate-500 mb-2 uppercase tracking-widest"><%= plan.name %> Snippet</label>
+                                <div class="relative group">
+                                    <pre class="bg-slate-950 p-4 rounded-xl text-xs overflow-x-auto border border-slate-800 text-slate-300"><code><%= 
+                                        // We need to escape or handle this carefully in a real app, but for now:
+                                        `<!-- Button -->
+<button id="pay-${ext.slug}-${plan.id}">Buy ${plan.name}</button>
+
+<!-- Script -->
+&lt;script&gt;
+// ... (see generated code below)
+&lt;/script&gt;`
+                                    %></code></pre>
+                                    <button class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-slate-800 hover:bg-slate-700 p-1 rounded text-[10px] transition-opacity" onclick="copyToClipboard(this)">Copy</button>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+
+                    <!-- Extension Verification -->
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4 flex items-center">
+                            <span class="mr-2">🛡️</span> Extension Verification
+                        </h4>
+                        <p class="text-slate-400 text-sm mb-4">Use this code in your extension's background script to verify the user's license.</p>
+                        
+                        <div class="relative group">
+                            <pre class="bg-slate-950 p-4 rounded-xl text-xs overflow-x-auto border border-slate-800 text-slate-300 h-64"><code>async function verifyLicense(licenseKey) {
+    const response = await fetch('<%= appUrl %>/api/verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            licenseKey: licenseKey,
+            extensionSlug: '<%= ext.slug %>'
+        })
+    });
+    return await response.json();
+}</code></pre>
+                            <button class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-slate-800 hover:bg-slate-700 p-1 rounded text-[10px] transition-opacity" onclick="copyToClipboard(this)">Copy</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        <% }) %>
+    </div>
+</div>
+
+<script>
+    function copyToClipboard(btn) {
+        const code = btn.previousElementSibling.innerText;
+        navigator.clipboard.writeText(code).then(() => {
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => btn.innerText = originalText, 2000);
+        });
+    }
+</script>

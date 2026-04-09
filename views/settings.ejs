@@ -1,0 +1,53 @@
+<div class="max-w-4xl mx-auto">
+    <header class="mb-12">
+        <h2 class="text-3xl font-bold">Settings</h2>
+        <p class="text-slate-400">Configure your Flutterwave API keys and application environment.</p>
+    </header>
+
+    <div class="space-y-8">
+        <section class="glass p-8 rounded-2xl">
+            <h3 class="text-xl font-semibold mb-6">Environment Variables</h3>
+            <p class="text-slate-400 text-sm mb-6">These settings are managed via your hosting provider (Render/Railway/AI Studio Secrets).</p>
+            
+            <div class="space-y-4">
+                <div class="flex justify-between items-center p-4 bg-slate-900/50 rounded-xl border border-slate-800">
+                    <div>
+                        <div class="font-mono text-sm">ADMIN_PASSWORD</div>
+                        <div class="text-xs text-slate-500">Password for this dashboard</div>
+                    </div>
+                    <div class="text-green-500 text-xs font-bold">CONFIGURED</div>
+                </div>
+                <div class="flex justify-between items-center p-4 bg-slate-900/50 rounded-xl border border-slate-800">
+                    <div>
+                        <div class="font-mono text-sm">FLW_PUBLIC_KEY</div>
+                        <div class="text-xs text-slate-500">Flutterwave Public API Key</div>
+                    </div>
+                    <div class="text-green-500 text-xs font-bold">CONFIGURED</div>
+                </div>
+                <div class="flex justify-between items-center p-4 bg-slate-900/50 rounded-xl border border-slate-800">
+                    <div>
+                        <div class="font-mono text-sm">FLW_SECRET_KEY</div>
+                        <div class="text-xs text-slate-500">Flutterwave Secret API Key</div>
+                    </div>
+                    <div class="text-green-500 text-xs font-bold">CONFIGURED</div>
+                </div>
+                <div class="flex justify-between items-center p-4 bg-slate-900/50 rounded-xl border border-slate-800">
+                    <div>
+                        <div class="font-mono text-sm">FLW_SECRET_HASH</div>
+                        <div class="text-xs text-slate-500">Webhook verification hash</div>
+                    </div>
+                    <div class="text-green-500 text-xs font-bold">CONFIGURED</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="glass p-8 rounded-2xl">
+            <h3 class="text-xl font-semibold mb-6">Webhook Configuration</h3>
+            <p class="text-slate-400 text-sm mb-4">Set this URL as your webhook endpoint in the Flutterwave Dashboard:</p>
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono text-blue-400 text-sm break-all">
+                <%= (typeof appUrl !== 'undefined' ? appUrl : '') %>/webhooks/flutterwave
+            </div>
+            <p class="text-slate-500 text-xs mt-4 italic">Note: Webhooks are required for reliable license generation if the user closes the browser during payment.</p>
+        </section>
+    </div>
+</div>

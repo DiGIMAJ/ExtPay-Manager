@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExtPay Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-slate-950: #020617;
+            --bg-slate-900: #0f172a;
+            --text-slate-200: #e2e8f0;
+            --text-slate-400: #94a3b8;
+            --blue-600: #2563eb;
+            --blue-700: #1d4ed8;
+        }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-slate-950); 
+            color: var(--text-slate-200);
+            margin: 0;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .sidebar-link.active {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen flex">
+    <!-- Sidebar -->
+    <aside class="w-64 border-r border-slate-800 flex flex-col">
+        <div class="p-6">
+            <h1 class="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                ExtPay Manager
+            </h1>
+        </div>
+        <nav class="flex-1 px-4 space-y-2">
+            <a href="/dashboard" class="sidebar-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-900 transition-colors">
+                <span class="mr-3">📊</span> Dashboard
+            </a>
+            <a href="/extensions" class="sidebar-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-900 transition-colors">
+                <span class="mr-3">🧩</span> Extensions
+            </a>
+            <a href="/snippets" class="sidebar-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-900 transition-colors">
+                <span class="mr-3">✂️</span> Snippets
+            </a>
+            <a href="/settings" class="sidebar-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-900 transition-colors">
+                <span class="mr-3">⚙️</span> Settings
+            </a>
+            <a href="/docs" class="sidebar-link flex items-center px-4 py-3 rounded-lg hover:bg-slate-900 transition-colors">
+                <span class="mr-3">📚</span> Docs
+            </a>
+        </nav>
+        <div class="p-4 border-t border-slate-800">
+            <a href="/logout" class="flex items-center px-4 py-2 text-slate-400 hover:text-white transition-colors">
+                <span class="mr-3">🚪</span> Logout
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8 overflow-y-auto">
+        <%- body %>
+    </main>
+
+    <script>
+        // Simple active link highlighting
+        const currentPath = window.location.pathname;
+        document.querySelectorAll('.sidebar-link').forEach(link => {
+            if (link.getAttribute('href') === currentPath) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
