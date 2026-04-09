@@ -4,6 +4,29 @@
         <p class="text-slate-400">Copy these code blocks to integrate payments and license checks.</p>
     </header>
 
+    <!-- AI IDE Prompt Section -->
+    <section class="mb-12 glass p-8 rounded-2xl border-blue-500/20">
+        <div class="flex items-center mb-4">
+            <span class="text-2xl mr-3">🤖</span>
+            <h3 class="text-xl font-bold">AI Integration Prompt</h3>
+        </div>
+        <p class="text-slate-400 text-sm mb-6">Copy this prompt and paste it into Cursor or VS Code to automate the integration process.</p>
+        
+        <div class="relative group">
+            <pre class="bg-slate-950 p-6 rounded-xl text-xs border border-slate-800 text-blue-300 whitespace-pre-wrap"><code>I want to integrate a payment and license system into my Chrome Extension. 
+I am using ExtPay Manager located at: <%= appUrl %>
+
+Please perform the following:
+1. In the extension background script, implement a `verifyLicense(licenseKey)` function that POSTs to `<%= appUrl %>/api/verify` with the `licenseKey` and extension slug.
+2. Create a UI in the extension popup for users to enter their license key and save it to `chrome.storage.local`.
+3. On my website, create a "Buy" button that calls `<%= appUrl %>/pay/init` with the `planId` and user's email, then redirects to the returned Flutterwave link.
+
+The extension slug is: [YOUR_EXTENSION_SLUG]
+The plan IDs are: [YOUR_PLAN_IDS]</code></pre>
+            <button class="absolute top-4 right-4 bg-slate-800 hover:bg-slate-700 px-3 py-1 rounded text-[10px] transition-all" onclick="copyToClipboard(this)">Copy Prompt</button>
+        </div>
+    </section>
+
     <div class="space-y-12">
         <% extensions.forEach(ext => { %>
             <section class="glass p-8 rounded-2xl">
@@ -30,12 +53,35 @@
                                 <div class="relative group">
                                     <pre class="bg-slate-950 p-4 rounded-xl text-xs overflow-x-auto border border-slate-800 text-slate-300"><code><%= 
                                         // We need to escape or handle this carefully in a real app, but for now:
-                                        `<!-- Button -->
-<button id="pay-${ext.slug}-${plan.id}">Buy ${plan.name}</button>
+                                    `<!-- Button -->
+<button id="pay-${ext.slug}-${plan.id}" class="extpay-btn">Buy ${plan.name}</button>
 
 <!-- Script -->
 &lt;script&gt;
-// ... (see generated code below)
+document.getElementById('pay-${ext.slug}-${plan.id}').addEventListener('click', async () => {
+    const email = prompt('Please enter your email for the license:');
+    if (!email) return;
+
+    try {
+        const response = await fetch('${appUrl}/pay/init', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                planId: ${plan.id},
+                email: email
+            })
+        });
+        const result = await response.json();
+        if (result.status === 'success') {
+            window.location.href = result.data.link;
+        } else {
+            alert('Payment failed to initialize: ' + result.message);
+        }
+    } catch (err) {
+        console.error(err);
+        alert('An error occurred. Please try again.');
+    }
+});
 &lt;/script&gt;`
                                     %></code></pre>
                                     <button class="absolute top-2 right-2 opacity-0 group-hover:opacity-100 bg-slate-800 hover:bg-slate-700 p-1 rounded text-[10px] transition-opacity" onclick="copyToClipboard(this)">Copy</button>

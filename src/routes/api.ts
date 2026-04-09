@@ -36,7 +36,7 @@ router.post('/plans/:id/delete', requireAuth, (req, res) => {
 
 // Licenses
 router.post('/licenses/:id/revoke', requireAuth, (req, res) => {
-    run('UPDATE licenses SET status = "revoked" WHERE id = ?', [req.params.id]);
+    run("UPDATE licenses SET status = 'revoked' WHERE id = ?", [req.params.id]);
     const license = db.prepare('SELECT extension_id FROM licenses WHERE id = ?').get([req.params.id]) as any;
     res.redirect(`/extensions/${license.extension_id}`);
 });

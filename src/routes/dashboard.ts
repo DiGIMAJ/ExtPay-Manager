@@ -11,8 +11,8 @@ router.get('/', (req, res) => {
 router.get('/dashboard', requireAuth, (req, res) => {
     const stats = {
         extensionsCount: (get('SELECT COUNT(*) as count FROM extensions') as any).count,
-        totalRevenue: (get('SELECT SUM(amount) as total FROM payments WHERE status = "successful"') as any).total || 0,
-        activeLicenses: (get('SELECT COUNT(*) as count FROM licenses WHERE status = "active"') as any).count,
+        totalRevenue: (get("SELECT SUM(amount) as total FROM payments WHERE status = 'successful'") as any).total || 0,
+        activeLicenses: (get("SELECT COUNT(*) as count FROM licenses WHERE status = 'active'") as any).count,
         recentPayments: db.prepare('SELECT * FROM payments ORDER BY paid_at DESC LIMIT 5').all()
     };
     res.render('dashboard', { stats });
@@ -20,7 +20,13 @@ router.get('/dashboard', requireAuth, (req, res) => {
 
 router.get('/extensions', requireAuth, (req, res) => {
     const extensions = db.prepare('SELECT * FROM extensions ORDER BY created_at DESC').all();
-    res.render('extensions', { extensions });
+    const extensionsWithPlans = extensions.map((ext: any) => {
+        return {
+            ...ext,
+            plans: db.prepare('SELECT * FROM plans WHERE extension_id = ?').all([ext.id])
+        };
+    });
+    res.render('extensions', { extensions: extensionsWithPlans, appUrl: process.env.APP_URL || '' });
 });
 
 router.get('/extensions/:id', requireAuth, (req, res) => {

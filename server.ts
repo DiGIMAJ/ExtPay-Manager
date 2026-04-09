@@ -1,7 +1,6 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import cookieSession from 'cookie-session';
 import expressLayouts from 'express-ejs-layouts';
 import dotenv from 'dotenv';
 
@@ -18,7 +17,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Trust proxy is required for secure cookies behind a proxy
 app.set('trust proxy', 1);
@@ -33,15 +32,6 @@ app.set('layout', 'layout');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(cookieSession({
-    name: 'extpay-session',
-    keys: [process.env.SESSION_SECRET || 'extpay-secret-key'],
-    maxAge: 24 * 60 * 60 * 1000, // 24 hours
-    secure: true,
-    sameSite: 'none',
-    httpOnly: true,
-}));
 
 // Global locals
 app.use((req, res, next) => {

@@ -21,13 +21,27 @@
         </section>
 
         <section>
-            <h3 class="text-2xl font-bold text-white mb-4">4. Integrate Checkout</h3>
-            <p>Copy the checkout snippet from the <a href="/snippets" class="text-blue-400">Snippets</a> page and add it to your website. This will show a "Buy" button that opens the Flutterwave payment modal.</p>
+            <h3 class="text-2xl font-bold text-white mb-4">4. AI Integration Prompt (Cursor/VS Code)</h3>
+            <p class="mb-4">Copy this prompt and paste it into your AI IDE (like Cursor or VS Code with Copilot) to automatically integrate the payment system into your extension or website.</p>
+            
+            <div class="relative group">
+                <pre class="bg-slate-950 p-6 rounded-2xl text-sm border border-slate-800 text-blue-300 whitespace-pre-wrap"><code>I want to integrate a payment and license system into my Chrome Extension. 
+I am using ExtPay Manager located at: <%= appUrl %>
+
+Please perform the following:
+1. In the extension background script, implement a `verifyLicense(licenseKey)` function that POSTs to `<%= appUrl %>/api/verify` with the `licenseKey` and extension slug.
+2. Create a UI in the extension popup for users to enter their license key and save it to `chrome.storage.local`.
+3. On my website, create a "Buy" button that calls `<%= appUrl %>/pay/init` with the `planId` and user's email, then redirects to the returned Flutterwave link.
+
+The extension slug is: [YOUR_EXTENSION_SLUG]
+The plan IDs are: [YOUR_PLAN_IDS]</code></pre>
+                <button class="absolute top-4 right-4 bg-slate-800 hover:bg-slate-700 px-3 py-1 rounded text-xs transition-all" onclick="copyToClipboard(this)">Copy Prompt</button>
+            </div>
         </section>
 
         <section>
-            <h3 class="text-2xl font-bold text-white mb-4">5. Verify Licenses in Extension</h3>
-            <p>In your Chrome extension's <code>background.js</code> or <code>popup.js</code>, use the verification snippet to check if the user has a valid license key. You should store the license key in <code>chrome.storage.local</code> after the user enters it.</p>
+            <h3 class="text-2xl font-bold text-white mb-4">5. Sample Website</h3>
+            <p>We've created a sample website for you in the <code>/sample-website</code> folder of this project. You can use it as a template for your own landing page.</p>
         </section>
 
         <section class="bg-blue-500/10 border border-blue-500/30 p-6 rounded-2xl">
@@ -36,3 +50,14 @@
         </section>
     </div>
 </div>
+
+<script>
+    function copyToClipboard(btn) {
+        const code = btn.previousElementSibling.innerText;
+        navigator.clipboard.writeText(code).then(() => {
+            const originalText = btn.innerText;
+            btn.innerText = 'Copied!';
+            setTimeout(() => btn.innerText = originalText, 2000);
+        });
+    }
+</script>

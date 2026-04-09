@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Awesome Extension - Landing Page</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">AwesomeExt</div>
+            <ul>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="https://chrome.google.com/webstore" class="btn-secondary">Install Now</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Supercharge Your Browser</h1>
+            <p>The ultimate tool for productivity. Get more done in less time with AwesomeExt.</p>
+            <div class="hero-btns">
+                <a href="#pricing" class="btn-primary">Get License</a>
+                <a href="#" class="btn-secondary">Watch Demo</a>
+            </div>
+        </section>
+
+        <section id="pricing" class="pricing">
+            <h2>Simple Pricing</h2>
+            <div class="pricing-grid">
+                <!-- Monthly Plan -->
+                <div class="pricing-card">
+                    <h3>Monthly</h3>
+                    <div class="price">$4.99<span>/mo</span></div>
+                    <ul>
+                        <li>All Features</li>
+                        <li>Priority Support</li>
+                        <li>Regular Updates</li>
+                    </ul>
+                    <!-- REPLACE THIS BUTTON WITH SNIPPET FROM DASHBOARD -->
+                    <button class="btn-primary extpay-btn" data-plan-id="1">Buy Monthly</button>
+                </div>
+
+                <!-- Lifetime Plan -->
+                <div class="pricing-card featured">
+                    <h3>Lifetime</h3>
+                    <div class="price">$29.99<span>/once</span></div>
+                    <ul>
+                        <li>All Features</li>
+                        <li>Lifetime Updates</li>
+                        <li>Premium Support</li>
+                    </ul>
+                    <!-- REPLACE THIS BUTTON WITH SNIPPET FROM DASHBOARD -->
+                    <button class="btn-primary extpay-btn" data-plan-id="2">Buy Lifetime</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AwesomeExt. Powered by ExtPay Manager.</p>
+    </footer>
+
+    <!-- Integration Script -->
+    <script src="script.js"></script>
+</body>
+</html>
